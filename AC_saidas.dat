@@ -1,0 +1,75 @@
+
+display Pac > saidas\Pac.xls;
+display Qac > saidas\Qac.xls;
+display Tin > saidas\Tin.xls;
+display Tparede > saidas\Tparede.xls;
+display Tout > saidas\Tout.xls;
+display Pac > saidas\Pac.xls;
+display desconforto > saidas\desconforto.xls;
+display on_off > saidas\on_off.xls;
+display frequency_ac > saidas\frequency_ac.xls;
+display pot_bateria > saidas\pot_bateria.xls;
+display carga_bateria > saidas\carga_bateria.xls;
+
+display mod_Pac_freq > saidas\mod_Pac_freq.xls;
+display mod_Qac_freq > saidas\mod_Qac_freq.xls;
+display mod_Pac_Tout > saidas\mod_Pac_Tout.xls;
+display mod_Qac_Tout > saidas\mod_Qac_Tout.xls;
+
+var COP{AC,Ot,Of};
+ for {w in AC}{
+	for{t in Ot}{
+		for {f in Of}{
+					if (Pac[w,t,f] == 0) then {
+					let COP[w,t,f] := 0;
+					}
+					else{
+					let COP[w,t,f] := Qac[w,t,f]/Pac[w,t,f];
+					}
+		}
+	}
+ }	display COP > saidas\COP.xls;
+
+var desconforto_calculado{AC,Ot,Of};
+ for {w in AC}{
+	for{t in Ot}{
+		for {f in Of}{
+		let desconforto_calculado[w,t,f] := abs(Tin[w,t,f] - Tset_casa[w]);
+		}
+	}
+ }	display desconforto_calculado > saidas\COP.xls;
+
+printf "\nTempo de Execucao: %f minutos \n", _solve_elapsed_time/60 >> saidas\saidas_funcoes_objetivo.txt;
+
+printf "Índice de Desconforto\n" > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", fo_desconforto > saidas\saidas_funcoes_objetivo.txt;
+
+printf "Consumo de Energia com Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", fo_gasto_com_tarifa_sem_bateria > saidas\saidas_funcoes_objetivo.txt;
+
+printf "Consumo de Energia sem Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", fo_gasto_sem_tarifa_sem_bateria > saidas\saidas_funcoes_objetivo.txt;
+
+printf "Consumo de Energia com Tarifa Branca com bateria\n" > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", fo_gasto_com_tarifa_com_bateria > saidas\saidas_funcoes_objetivo.txt;
+
+printf "Consumo de Energia sem Tarifa Branca com bateria\n" > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", fo_gasto_sem_tarifa_com_bateria > saidas\saidas_funcoes_objetivo.txt;
+
+printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
+printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
