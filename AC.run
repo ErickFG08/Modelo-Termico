@@ -1,0 +1,41 @@
+###################################################################################
+########################## Modelo Simplicado dos ACs #############################
+
+reset;	# apaga a memoria
+
+# ----------------------------------------------------
+# 	Modelo linearizado
+# ----------------------------------------------------
+
+# Leitura do modelo
+model AC.mod;
+
+# Dados do sistema
+data AC.dat;
+
+# Define o solver e as opções
+option solver CPLEXamp;
+option display_1col 0;
+option display_round 4;
+option display_width 1000;
+option omit_zero_cols 1;
+option cplex_options "mipdisplay=0 mipinterval=20 mipgap=0 probe=3"; 
+
+# Resolve o modelo matemático do ponto de operação inicial
+
+for {w in AC} {
+
+let z := w;
+
+	#solve fo_desconforto;
+	#solve fo_gasto_com_tarifa_sem_bateria;
+	#solve fo_gasto_sem_tarifa_sem_bateria;
+	solve fo_gasto_com_tarifa_com_bateria;
+	#solve fo_gasto_sem_tarifa_com_bateria;
+
+}
+
+data AC_saidas.dat;
+
+printf "Arquivos Criados!!!\n";
+printf "Tempo de Execucao: %f minutos \n", _solve_elapsed_time/60;
