@@ -58,5 +58,3 @@ printf "%6.4f \n", fo_gasto_sem_tarifa_com_bateria > saidas\saidas_funcoes_objet
 
 printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
 printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
-
-##
