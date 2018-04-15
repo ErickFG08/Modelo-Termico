@@ -127,5 +127,3 @@ param: BAT : potencia_nom_bat    eficiencia_bat	         capacidade_bat	   BAT_F
 #411	    4	0.95	10	0			0			1
 #412	    4	0.95	10	0			1			0
 ;
-
-#erick-notebook
