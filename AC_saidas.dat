@@ -6,8 +6,6 @@ display Tparede > saidas\Tparede.xls;
 display Tout > saidas\Tout.xls;
 display Pac > saidas\Pac.xls;
 display desconforto > saidas\desconforto.xls;
-display on_off > saidas\on_off.xls;
-display frequency_ac > saidas\frequency_ac.xls;
 display pot_bateria > saidas\pot_bateria.xls;
 display carga_bateria > saidas\carga_bateria.xls;
 
@@ -59,3 +57,10 @@ printf "%6.4f \n", fo_gasto_sem_tarifa_com_bateria > saidas\saidas_funcoes_objet
 printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
 printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
 
+
+option omit_zero_cols 0;
+
+display on_off > saidas\on_off.xls;
+display frequency_ac > saidas\frequency_ac.xls;
+
+option omit_zero_cols 1;

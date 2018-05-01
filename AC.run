@@ -28,9 +28,9 @@ for {w in AC} {
 let z := w;
 
 	#solve fo_desconforto;
-	#solve fo_gasto_com_tarifa_sem_bateria;
+	solve fo_gasto_com_tarifa_sem_bateria;
 	#solve fo_gasto_sem_tarifa_sem_bateria;
-	solve fo_gasto_com_tarifa_com_bateria;
+	#solve fo_gasto_com_tarifa_com_bateria;
 	#solve fo_gasto_sem_tarifa_com_bateria;
 
 }
