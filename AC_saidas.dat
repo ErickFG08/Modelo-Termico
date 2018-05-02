@@ -40,19 +40,19 @@ var desconforto_calculado{AC,Ot,Of};
 printf "\nTempo de Execucao: %f minutos \n", _solve_elapsed_time/60 >> saidas\saidas_funcoes_objetivo.txt;
 
 printf "Índice de Desconforto\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%6.4f \n", fo_desconforto > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", sum{x in AC}saida_fo_desconforto[x]/card(AC) > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Consumo de Energia com Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%6.4f \n", fo_gasto_com_tarifa_sem_bateria > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", sum{x in AC}saida_fo_gasto_com_tarifa_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Consumo de Energia sem Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%6.4f \n", fo_gasto_sem_tarifa_sem_bateria > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", sum{x in AC}saida_fo_gasto_sem_tarifa_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Consumo de Energia com Tarifa Branca com bateria\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%6.4f \n", fo_gasto_com_tarifa_com_bateria > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", sum{x in AC}saida_fo_gasto_com_tarifa_com_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Consumo de Energia sem Tarifa Branca com bateria\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%6.4f \n", fo_gasto_sem_tarifa_com_bateria > saidas\saidas_funcoes_objetivo.txt;
+printf "%6.4f \n", sum{x in AC}saida_fo_gasto_sem_tarifa_com_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
 
 printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
 printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
@@ -65,8 +65,3 @@ display frequency_ac > saidas\frequency_ac.xls;
 
 option omit_zero_cols 1;
 
-display sum{x in AC}saida_fo_desconforto[x]/card(AC) > saidas\fo.txt;
-#display saida_fo_gasto_com_tarifa_sem_bateria[z] := fo_gasto_com_tarifa_sem_bateria;
-#display saida_fo_gasto_sem_tarifa_sem_bateria[z] := fo_gasto_sem_tarifa_sem_bateria;
-#display saida_fo_gasto_com_tarifa_com_bateria[z] := fo_gasto_com_tarifa_com_bateria;
-#display saida_fo_gasto_sem_tarifa_com_bateria[z] := fo_gasto_sem_tarifa_com_bateria;
