@@ -82,10 +82,10 @@ minimize fo_gasto_sem_tarifa_sem_bateria:
 						sum{t in Ot, f in Of} Pac[z,t,f] * dT * preco_energia;
 						
 minimize fo_gasto_com_tarifa_com_bateria: 
-						sum {t in Ot, f in Of, b in BAT} (Pac[z,t,f] - pot_bateria[b,t,f]) * tarifa_branca[t] * dT * preco_energia;
+						sum {t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
 						
 minimize fo_gasto_sem_tarifa_com_bateria: 
-						sum{t in Ot, f in Of, b in BAT} (Pac[z,t,f] - pot_bateria[b,t,f]) * dT * preco_energia;
+						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f]) * dT * preco_energia;
 
 #############################################################################					
 					
