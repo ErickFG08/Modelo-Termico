@@ -113,7 +113,7 @@ param : AC: AC_Fase_a   AC_Fase_b   AC_Fase_c        Ra      Ca      Rm      Cm	
 412			0			1			0				2.31	3.25	0.94	6.60	1.51	2.93	23		  
 ;
 
-param: BAT : potencia_nom_bat    eficiencia_bat	         capacidade_bat	   BAT_Fase_a		BAT_Fase_b		BAT_Fase_c	:=
+#param: BAT : potencia_nom_bat    eficiencia_bat	         capacidade_bat	   BAT_Fase_a		BAT_Fase_b		BAT_Fase_c	:=
 #401	    4	0.95	10	0			0			1
 #402	    4	0.95	10	0			1			0
 #403	    4	0.95	10	0			1			0
@@ -126,4 +126,19 @@ param: BAT : potencia_nom_bat    eficiencia_bat	         capacidade_bat	   BAT_F
 #410	    4	0.95	10	1			0			0
 #411	    4	0.95	10	0			0			1
 #412	    4	0.95	10	0			1			0
+#;
+
+param: BAT : potencia_nom_bat    eficiencia_bat	         capacidade_bat	   BAT_Fase_a		BAT_Fase_b		BAT_Fase_c	:=
+401	    0	0.95	10	0			0			1
+402	    0	0.95	10	0			1			0
+403	    0	0.95	10	0			1			0
+404	    0	0.95	10	0			0			1
+405	    0	0.95	10	0			1			0
+406	    0	0.95	10	1			0			0
+407	    0	0.95	10	1			0			0
+408	    0	0.95	10	0			0			1
+409	    0	0.95	10	0			0			1
+410	    0	0.95	10	1			0			0
+411	    0	0.95	10	0			0			1
+412	    0	0.95	10	0			1			0
 ;

@@ -64,3 +64,9 @@ display on_off > saidas\on_off.xls;
 display frequency_ac > saidas\frequency_ac.xls;
 
 option omit_zero_cols 1;
+
+display sum{x in AC}saida_fo_desconforto[x]/card(AC) > saidas\fo.txt;
+#display saida_fo_gasto_com_tarifa_sem_bateria[z] := fo_gasto_com_tarifa_sem_bateria;
+#display saida_fo_gasto_sem_tarifa_sem_bateria[z] := fo_gasto_sem_tarifa_sem_bateria;
+#display saida_fo_gasto_com_tarifa_com_bateria[z] := fo_gasto_com_tarifa_com_bateria;
+#display saida_fo_gasto_sem_tarifa_com_bateria[z] := fo_gasto_sem_tarifa_com_bateria;

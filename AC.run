@@ -23,6 +23,12 @@ option cplex_options "mipdisplay=0 mipinterval=20 mipgap=0 probe=3";
 
 # Resolve o modelo matemático do ponto de operação inicial
 
+param saida_fo_desconforto{w in AC};
+param saida_fo_gasto_com_tarifa_sem_bateria{w in AC};
+param saida_fo_gasto_sem_tarifa_sem_bateria{w in AC};
+param saida_fo_gasto_com_tarifa_com_bateria{w in AC};
+param saida_fo_gasto_sem_tarifa_com_bateria{w in AC};
+
 for {w in AC} {
 
 let z := w;
@@ -33,6 +39,11 @@ let z := w;
 	#solve fo_gasto_com_tarifa_com_bateria;
 	#solve fo_gasto_sem_tarifa_com_bateria;
 
+let saida_fo_desconforto[z] := fo_desconforto;
+let saida_fo_gasto_com_tarifa_sem_bateria[z] := fo_gasto_com_tarifa_sem_bateria;
+let saida_fo_gasto_sem_tarifa_sem_bateria[z] := fo_gasto_sem_tarifa_sem_bateria;
+let saida_fo_gasto_com_tarifa_com_bateria[z] := fo_gasto_com_tarifa_com_bateria;
+let saida_fo_gasto_sem_tarifa_com_bateria[z] := fo_gasto_sem_tarifa_com_bateria;
 }
 
 data AC_saidas.dat;

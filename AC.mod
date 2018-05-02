@@ -71,9 +71,9 @@ param BAT_Fase_c{BAT};  			# Determina operação da BAT na Fase C
 # FUNÇÕES OBJETIVO
 
 minimize fo_desconforto: 
-						(sum {t in Ot : AC_Fase_a[z] == 1} (desconforto[z,t,1]))/card(AC)/card(Ot) + 
-                        (sum {t in Ot : AC_Fase_b[z] == 1} (desconforto[z,t,2]))/card(AC)/card(Ot) + 
-                        (sum {t in Ot : AC_Fase_c[z] == 1} (desconforto[z,t,3]))/card(AC)/card(Ot) ;
+						(sum {t in Ot : AC_Fase_a[z] == 1} (desconforto[z,t,1]))/card(Ot) + 
+                        (sum {t in Ot : AC_Fase_b[z] == 1} (desconforto[z,t,2]))/card(Ot) + 
+                        (sum {t in Ot : AC_Fase_c[z] == 1} (desconforto[z,t,3]))/card(Ot) ;
 
 minimize fo_gasto_com_tarifa_sem_bateria: 
 						sum {t in Ot, f in Of} Pac[z,t,f] * tarifa_branca[t] * dT * preco_energia;
