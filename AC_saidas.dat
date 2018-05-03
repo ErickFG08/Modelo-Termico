@@ -65,3 +65,5 @@ display frequency_ac > saidas\frequency_ac.xls;
 
 option omit_zero_cols 1;
 
+
+
