@@ -51,3 +51,4 @@ data AC_saidas.dat;
 
 printf "Arquivos Criados!!!\n";
 printf "Tempo de Execucao: %f minutos \n", _solve_elapsed_time/60;
+
