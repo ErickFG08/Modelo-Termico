@@ -31,20 +31,17 @@ var COP{AC,Ot,Of};
 var desconforto_calculado{AC,Ot,Of};
  for {w in AC}{
 	for{t in Ot}{
-		for {f in Of}{
-		let desconforto_calculado[w,t,f] := abs(Tin[w,t,f] - Tset_casa[w]);
-		}
+		let desconforto_calculado[w,t,1] := abs(Tin[w,t,1] - Tset_casa[w] * AC_Fase_a[w]);
+		let desconforto_calculado[w,t,2] := abs(Tin[w,t,2] - Tset_casa[w] * AC_Fase_b[w]);
+		let desconforto_calculado[w,t,3] := abs(Tin[w,t,3] - Tset_casa[w] * AC_Fase_c[w]);
 	}
- }	display desconforto_calculado > saidas\COP.xls;
+ }	display desconforto_calculado > saidas\desconforto_calculado.xls;
 
 printf "\nTempo de Execucao: %f minutos \n", _solve_elapsed_time/60 >> saidas\saidas_funcoes_objetivo.txt;
 
 printf "Índice de Desconforto\n" > saidas\saidas_funcoes_objetivo.txt;
 
-printf "%4f \n",  (sum{x in AC, t in Ot}abs(Tin[x,t,1] - Tset_casa[x] * AC_Fase_a[x])/card(Ot) +
-					 sum{x in AC, t in Ot}abs(Tin[x,t,2] - Tset_casa[x] * AC_Fase_b[x])/card(Ot) +
-					 sum{x in AC, t in Ot}abs(Tin[x,t,3] - Tset_casa[x] * AC_Fase_c[x])/card(Ot)
-					)/card(AC) > saidas\saidas_funcoes_objetivo.txt;
+printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/card(Ot)/card(AC) > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Consumo de Energia com Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
 printf "%4f \n", sum{x in AC}saida_fo_gasto_com_tarifa_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
