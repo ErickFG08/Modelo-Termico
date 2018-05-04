@@ -292,7 +292,7 @@ param Tinicial = 1.5;
 	desconforto[z,t,2] = 0;
 	
 	subject to conforto_2c{t in Ot : AC_Fase_c[z] = 0}:
-	desconforto[z,t,3] = 0;	
+	desconforto[z,t,3] = 0;
 	
 	subject to conforto_3{t in Ot, f in Of}:
 	Tin[z,t,f] - Tset_casa[z] = Taux1[z,t,f] - Taux2[z,t,f]; 
@@ -334,14 +334,3 @@ param Tinicial = 1.5;
 	pot_bateria[b,t,3] = 0;
 	
 # END BATTERY
-
-
-
-
-
-
-
-
-
-
-
