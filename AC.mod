@@ -42,7 +42,8 @@ param Pnom_ac{AC};
 param COP_nom{AC};
 var desconforto{AC,Ot,Of};			# Medida de desconforto térmico do usuário
 var frequency_ac{AC,Ot,Of} >= 0;	# Potência de refrigeração do AC [kW]
-var on_off{AC,Ot,Of} binary;		# Variável que determina se o AC está ligado ou desligado
+#var on_off{AC,Ot,Of} binary;		# Variável que determina se o AC está ligado ou desligado
+param on_off{AC,Ot,Of} binary;		# Variável que determina se o AC está ligado ou desligado
 
 var mod_Pac_freq{AC,Ot,Of};
 var mod_Pac_Tout{Ot};
@@ -134,53 +135,31 @@ param Tinicial = 1.5;
 	  
 ## Tin 2 ##
  
-	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] <= Tset_casa[z] + 1.5;
-	
-	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] <= Tset_casa[z] + 1.5;
-	
-	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] <= Tset_casa[z] + 1.5;
+#	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
+#	Tin[z,t,1] <= Tset_casa[z] + 1.5;
+#	
+#	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
+#	Tin[z,t,2] <= Tset_casa[z] + 1.5;
+#	
+#	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
+#	Tin[z,t,3] <= Tset_casa[z] + 1.5;
  
 ## Tin 3 ##
 		 
-	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] >= Tset_casa[z] - 1.5;
-	
-	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] >= Tset_casa[z] - 1.5;  
-	
-	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] >= Tset_casa[z] - 1.5;
+#	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
+#	Tin[z,t,1] >= Tset_casa[z] - 1.5;
+#	
+#	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
+#	Tin[z,t,2] >= Tset_casa[z] - 1.5;  
+#	
+#	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
+#	Tin[z,t,3] >= Tset_casa[z] - 1.5;
 
-## Frequency Min ##
-
-	subject to frequency_ac_min_a{t in Ot : AC_Fase_a[z] = 1}:
-		frequency_ac[z,t,1] >= 20 * on_off[z,t,1];
-#		frequency_ac[z,t,1] >= 20;
-
-	subject to frequency_ac_min_b{t in Ot : AC_Fase_b[z] = 1}:
-		frequency_ac[z,t,2] >= 20 * on_off[z,t,2];
-#		frequency_ac[z,t,2] >= 20;
-
-	subject to frequency_ac_min_c{t in Ot : AC_Fase_c[z] = 1}:
-		frequency_ac[z,t,3] >= 20 * on_off[z,t,3];
-#		frequency_ac[z,t,3] >= 20;
-
-	subject to frequency_ac_min_a0{t in Ot : AC_Fase_a[z] = 0}:
-		frequency_ac[z,t,1] = 0;
-
-	subject to frequency_ac_min_b0{t in Ot : AC_Fase_b[z] = 0}:
-		frequency_ac[z,t,2] = 0;
-		
-	subject to frequency_ac_min_c0{t in Ot : AC_Fase_c[z] = 0}:
-		frequency_ac[z,t,3] = 0;
-
-## Frequency Max ##
+## Frequency ##
 	
 	subject to frequency_ac_max{t in Ot, f in Of}:
-		frequency_ac[z,t,f] <= 90 * on_off[z,t,f];
+		frequency_ac[z,t,f] = 90 * on_off[z,t,f];
+#		frequency_ac[z,t,f] <= 90 * on_off[z,t,f];
 #		frequency_ac[z,t,f] <= 90;
 	   
 ## Mod Pac Freq ##

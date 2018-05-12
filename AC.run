@@ -13,13 +13,17 @@ model AC.mod;
 # Dados do sistema
 data AC.dat;
 
+# Dados de Entrada
+data AC_Input_ONOFF.dat;
+
 # Define o solver e as opções
 option solver CPLEXamp;
 option display_1col 0;
 option display_round 4;
 option display_width 1000;
 option omit_zero_cols 1;
-option cplex_options "mipdisplay=0 mipinterval=20 mipgap=0 probe=3"; 
+option cplex_options "mipdisplay=5 mipinterval=20 probe=3"; 
+#option cplex_options "mipdisplay=0 mipinterval=20 mipgap=0 probe=3"; 
 
 # Resolve o modelo matemático do ponto de operação inicial
 
@@ -33,10 +37,10 @@ for {w in AC} {
 
 	let z := w;
 
-		#solve fo_desconforto;
+		solve fo_desconforto;
 		#solve fo_gasto_com_tarifa_sem_bateria;
 		#solve fo_gasto_sem_tarifa_sem_bateria;
-		solve fo_gasto_com_tarifa_com_bateria;
+		#solve fo_gasto_com_tarifa_com_bateria;
 		#solve fo_gasto_sem_tarifa_com_bateria;
 
 	let saida_fo_desconforto[z] := fo_desconforto;
