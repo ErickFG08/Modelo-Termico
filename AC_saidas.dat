@@ -69,6 +69,8 @@ option omit_zero_cols 0;
 
 display on_off > saidas\on_off.xls;
 display frequency_ac > saidas\frequency_ac.xls;
+display pot_bateria > saidas\pot_bateria.xls;
+display pot_pfv > saidas\pot_pfv.xls;
 
 option omit_zero_cols 1;
 
