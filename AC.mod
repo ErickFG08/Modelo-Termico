@@ -1,5 +1,6 @@
 set AC;       					# Conjuno de ACs
 set BAT;      					# Conjunto de baterias
+set PFV;      					# Conjunto de painéis fotovoltáicos
 set Ot;       					# Conjunto de tempo de planejamento
 set Of = 1 .. 3 by 1;   		# Conjunto de fases
 
@@ -16,6 +17,7 @@ param preco_energia := 0.36448; # Preco da energia R$/kWh
 # Parâmetros do ambiente
 
 param Tout{Ot};       						# Temperatura externa
+param Irradiacao_sem_nuvem{Ot};			# Irradiacao solar [kW/m2]
 
 # Parâmetros e variáveis térmicas das casas
 
@@ -68,6 +70,29 @@ param BAT_Fase_c{BAT};  			# Determina operação da BAT na Fase C
 
 #############################################################################
 
+# PAINEIS
+
+param potencia_nom_pfv{PFV};		# Potência nominal do painel [kW]
+param eficiencia_pfv{PFV};  		# Eficiência do painel
+param num_placas_pfv{PFV};  		# Número de placas solares
+param area_pfv{PFV};				# Área dos painéis fotovoltaicos
+
+var pot_pfv{PFV,Ot,Of};
+
+param PFV_Fase_a{PFV};  			# Determina operação dos PFV da Fase A
+param PFV_Fase_b{PFV};  			# Determina operação dos PFV da Fase B
+param PFV_Fase_c{PFV};  			# Determina operação dos PFV da Fase C
+    
+var Ipfv_re_a{PFV,Ot}; 				# Corrente real dos PFV da Fase A
+var Ipfv_re_b{PFV,Ot}; 				# Corrente real dos PFV da Fase B
+var Ipfv_re_c{PFV,Ot}; 				# Corrente real dos PFV da Fase C
+				
+var Ipfv_im_a{PFV,Ot}; 				# Corrente imag dos PFV da Fase A
+var Ipfv_im_b{PFV,Ot}; 				# Corrente imag dos PFV da Fase B
+var Ipfv_im_c{PFV,Ot}; 				# Corrente imag dos PFV da Fase C   
+
+##################################################### 
+  
 # FUNÇÕES OBJETIVO
 
 minimize fo_desconforto: 
@@ -86,6 +111,13 @@ minimize fo_gasto_com_tarifa_com_bateria:
 						
 minimize fo_gasto_sem_tarifa_com_bateria: 
 						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f]) * dT * preco_energia;
+
+minimize fo_gasto_sem_tarifa_com_bateria_e_paineis: 
+						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] - pot_pfv[z,t,f]) * dT * preco_energia;
+
+minimize fo_gasto_com_tarifa_com_bateria_e_paineis: 
+						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] - pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
+
 
 #############################################################################					
 					
@@ -334,3 +366,28 @@ param Tinicial = 1.5;
 	pot_bateria[b,t,3] = 0;
 	
 # END BATTERY
+
+# BEGIN PAINEL
+
+	subject to restricao_pfv_0_a1{p in PFV, t in Ot : PFV_Fase_a[p] == 1}:
+	pot_pfv[p,t,1] = - num_placas_pfv[p] * area_pfv[p] * eficiencia_pfv[p] *
+	(1 - 0.00375 * (Tout[t] - 24)) * Irradiacao_sem_nuvem[t];
+	
+	subject to restricao_pfv_0_a0{p in PFV, t in Ot : PFV_Fase_a[p] == 0}:
+	pot_pfv[p,t,1] = 0;
+	
+	subject to restricao_pfv_0_b1{p in PFV, t in Ot : PFV_Fase_b[p] == 1}:
+	pot_pfv[p,t,2] = - num_placas_pfv[p] * area_pfv[p] * eficiencia_pfv[p] *
+	(1 - 0.00375 * (Tout[t] - 24)) * Irradiacao_sem_nuvem[t];
+	
+	subject to restricao_pfv_0_b0{p in PFV, t in Ot : PFV_Fase_b[p] == 0}:
+	pot_pfv[p,t,2] = 0;
+	
+	subject to restricao_pfv_0_c1{p in PFV, t in Ot : PFV_Fase_c[p] == 1}:
+	pot_pfv[p,t,3] = - num_placas_pfv[p] * area_pfv[p] * eficiencia_pfv[p] *
+	(1 - 0.00375 * (Tout[t] - 24)) * Irradiacao_sem_nuvem[t];
+	
+	subject to restricao_pfv_0_c0{p in PFV, t in Ot : PFV_Fase_c[p] == 0}:
+	pot_pfv[p,t,3] = 0;
+
+# END PAINEL

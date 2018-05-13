@@ -36,14 +36,19 @@ for {w in AC} {
 		#solve fo_desconforto;
 		#solve fo_gasto_com_tarifa_sem_bateria;
 		#solve fo_gasto_sem_tarifa_sem_bateria;
-		solve fo_gasto_com_tarifa_com_bateria;
+		#solve fo_gasto_com_tarifa_com_bateria;
 		#solve fo_gasto_sem_tarifa_com_bateria;
+		#solve fo_gasto_sem_tarifa_com_bateria_e_paineis;
+		solve fo_gasto_sem_tarifa_com_bateria_e_paineis;
 
-	let saida_fo_desconforto[z] := fo_desconforto;
-	let saida_fo_gasto_com_tarifa_sem_bateria[z] := fo_gasto_com_tarifa_sem_bateria;
-	let saida_fo_gasto_sem_tarifa_sem_bateria[z] := fo_gasto_sem_tarifa_sem_bateria;
-	let saida_fo_gasto_com_tarifa_com_bateria[z] := fo_gasto_com_tarifa_com_bateria;
-	let saida_fo_gasto_sem_tarifa_com_bateria[z] := fo_gasto_sem_tarifa_com_bateria;
+
+	let saida_fo_desconforto[z]                      := fo_desconforto;
+	let saida_fo_gasto_com_tarifa_sem_bateria[z]	 := fo_gasto_com_tarifa_sem_bateria;
+	let saida_fo_gasto_sem_tarifa_sem_bateria[z]	 := fo_gasto_sem_tarifa_sem_bateria;
+	let saida_fo_gasto_com_tarifa_com_bateria[z]	 := fo_gasto_com_tarifa_com_bateria;
+	let saida_fo_gasto_sem_tarifa_com_bateria[z]	 := fo_gasto_sem_tarifa_com_bateria;
+	let fo_gasto_sem_tarifa_com_bateria_e_paineis[z] := fo_gasto_sem_tarifa_com_bateria_e_paineis;
+	let fo_gasto_sem_tarifa_com_bateria_e_paineis[z] := fo_gasto_sem_tarifa_com_bateria_e_paineis;
 
 }
 
