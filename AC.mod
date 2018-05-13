@@ -82,14 +82,6 @@ var pot_pfv{PFV,Ot,Of};
 param PFV_Fase_a{PFV};  			# Determina operação dos PFV da Fase A
 param PFV_Fase_b{PFV};  			# Determina operação dos PFV da Fase B
 param PFV_Fase_c{PFV};  			# Determina operação dos PFV da Fase C
-    
-var Ipfv_re_a{PFV,Ot}; 				# Corrente real dos PFV da Fase A
-var Ipfv_re_b{PFV,Ot}; 				# Corrente real dos PFV da Fase B
-var Ipfv_re_c{PFV,Ot}; 				# Corrente real dos PFV da Fase C
-				
-var Ipfv_im_a{PFV,Ot}; 				# Corrente imag dos PFV da Fase A
-var Ipfv_im_b{PFV,Ot}; 				# Corrente imag dos PFV da Fase B
-var Ipfv_im_c{PFV,Ot}; 				# Corrente imag dos PFV da Fase C   
 
 ##################################################### 
   
@@ -108,6 +100,11 @@ minimize fo_gasto_com_bateria:
 						
 minimize fo_gasto_com_bateria_e_paineis: 
 						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
+
+minimize xxx: 
+						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia
+						+ sum{t in Ot, f in Of} <<0 , 2 ; 0 , 0 , 999999 >> desconforto[z,t,f]/card(Ot)
+						;
 
 #############################################################################					
 					
@@ -156,25 +153,25 @@ param Tinicial = 1.5;
 	  
 ## Tin 2 ##
  
-	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] <= Tset_casa[z] + 1.5;
-	
-	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] <= Tset_casa[z] + 1.5;
-	
-	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] <= Tset_casa[z] + 1.5;
+#	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
+#	Tin[z,t,1] <= Tset_casa[z] + 1.5;
+#	
+#	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
+#	Tin[z,t,2] <= Tset_casa[z] + 1.5;
+#	
+#	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
+#	Tin[z,t,3] <= Tset_casa[z] + 1.5;
  
 ## Tin 3 ##
 		 
-	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] >= Tset_casa[z] - 1.5;
-	
-	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] >= Tset_casa[z] - 1.5;  
-	
-	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] >= Tset_casa[z] - 1.5;
+#	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
+#	Tin[z,t,1] >= Tset_casa[z] - 1.5;
+#	
+#	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
+#	Tin[z,t,2] >= Tset_casa[z] - 1.5;  
+#	
+#	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
+#	Tin[z,t,3] >= Tset_casa[z] - 1.5;
 
 ## Frequency Min ##
 

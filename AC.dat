@@ -323,3 +323,6 @@ param: PFV: 	potencia_nom_pfv	eficiencia_pfv 	  num_placas_pfv	    area_pfv		PFV
 2211	0.285	0.1733	17	1.652695	0	1	0
 2212	0.285	0.1733	20	1.652695	1	0	0
 ;
+
+# Eficiênca!!! dos PFVs é 0.1733;
+# Pot BAT é 4;

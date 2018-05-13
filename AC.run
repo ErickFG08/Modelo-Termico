@@ -33,9 +33,10 @@ for {w in AC} {
 	let z := w;
 
 		#solve fo_desconforto;
-		solve fo_gasto_sem_bateria;
+		#solve fo_gasto_sem_bateria;
 		#solve fo_gasto_com_bateria;
 		#solve fo_gasto_com_bateria_e_paineis;
+		solve xxx;
 
 	let saida_fo_desconforto[z]                  := fo_desconforto;
 	let saida_fo_gasto_sem_bateria[z]	         := fo_gasto_sem_bateria;
