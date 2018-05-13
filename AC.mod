@@ -100,13 +100,13 @@ minimize fo_desconforto:
                         (sum {t in Ot : AC_Fase_b[z] == 1} (desconforto[z,t,2]))/card(Ot) + 
                         (sum {t in Ot : AC_Fase_c[z] == 1} (desconforto[z,t,3]))/card(Ot) ;
 
-minimize fo_gasto_com_tarifa_sem_bateria: 
+minimize fo_gasto_sem_bateria: 
 						sum {t in Ot, f in Of} Pac[z,t,f] * tarifa_branca[t] * dT * preco_energia;
 				
-minimize fo_gasto_com_tarifa_com_bateria: 
+minimize fo_gasto_com_bateria: 
 						sum {t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
 						
-minimize fo_gasto_com_tarifa_com_bateria_e_paineis: 
+minimize fo_gasto_com_bateria_e_paineis: 
 						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
 
 #############################################################################					
