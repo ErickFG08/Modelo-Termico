@@ -46,20 +46,11 @@ printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/ca
 printf "Consumo de Energia com Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
 printf "%4f \n", sum{x in AC}saida_fo_gasto_com_tarifa_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
 
-printf "Consumo de Energia sem Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%4f \n", sum{x in AC}saida_fo_gasto_sem_tarifa_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
-
 printf "Consumo de Energia com Tarifa Branca com baterias\n" > saidas\saidas_funcoes_objetivo.txt;
 printf "%4f \n", sum{x in AC}saida_fo_gasto_com_tarifa_com_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
 
-printf "Consumo de Energia sem Tarifa Branca com baterias\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%4f \n", sum{x in AC}saida_fo_gasto_sem_tarifa_com_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
-
 printf "Consumo de Energia com Tarifa Branca com baterias e paineis\n" > saidas\saidas_funcoes_objetivo.txt;
 printf "%4f \n", sum{x in AC}saida_fo_gasto_com_tarifa_com_bateria_e_paineis[x] > saidas\saidas_funcoes_objetivo.txt;
-
-printf "Consumo de Energia sem Tarifa Branca com baterias e paineis\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%4f \n", sum{x in AC}saida_fo_gasto_sem_tarifa_com_bateria_e_paineis[x] > saidas\saidas_funcoes_objetivo.txt;
 
 printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
 printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
