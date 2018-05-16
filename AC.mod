@@ -101,8 +101,11 @@ minimize fo_gasto_com_bateria:
 minimize fo_gasto_com_bateria_e_paineis: 
 						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
 
+minimize fo_gasto_com_bateria_e_paineis_ao_quadrado: 
+						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
+
 minimize xxx: 
-						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia
+						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia
 						+ sum{t in Ot, f in Of} <<0 , 2 ; 0 , 0 , 999999 >> desconforto[z,t,f]/card(Ot)
 						;
 
@@ -153,25 +156,27 @@ param Tinicial = 1.5;
 	  
 ## Tin 2 ##
  
-#	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-#	Tin[z,t,1] <= Tset_casa[z] + 1.5;
-#	
-#	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-#	Tin[z,t,2] <= Tset_casa[z] + 1.5;
-#	
-#	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-#	Tin[z,t,3] <= Tset_casa[z] + 1.5;
+param dTemp = 2;
+
+	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
+	Tin[z,t,1] <= Tset_casa[z] + dTemp;
+	
+	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
+	Tin[z,t,2] <= Tset_casa[z] + dTemp;
+	
+	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
+	Tin[z,t,3] <= Tset_casa[z] + dTemp;
  
 ## Tin 3 ##
 		 
-#	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-#	Tin[z,t,1] >= Tset_casa[z] - 1.5;
-#	
-#	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-#	Tin[z,t,2] >= Tset_casa[z] - 1.5;  
-#	
-#	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-#	Tin[z,t,3] >= Tset_casa[z] - 1.5;
+	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
+	Tin[z,t,1] >= Tset_casa[z] - dTemp;
+	
+	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
+	Tin[z,t,2] >= Tset_casa[z] - dTemp;  
+	
+	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
+	Tin[z,t,3] >= Tset_casa[z] - dTemp;
 
 ## Frequency Min ##
 

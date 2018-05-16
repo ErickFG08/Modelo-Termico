@@ -6,7 +6,6 @@ display Tparede > saidas\Tparede.xls;
 display Tout > saidas\Tout.xls;
 display Pac > saidas\Pac.xls;
 display desconforto > saidas\desconforto.xls;
-display pot_bateria > saidas\pot_bateria.xls;
 display carga_bateria > saidas\carga_bateria.xls;
 
 display mod_Pac_freq > saidas\mod_Pac_freq.xls;
