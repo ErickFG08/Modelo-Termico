@@ -13,13 +13,13 @@ display mod_Qac_freq_x > saidas\mod_Qac_freq.xls;
 display mod_Pac_Tout_x > saidas\mod_Pac_Tout.xls;
 display mod_Qac_Tout_x > saidas\mod_Qac_Tout.xls;
 
-display desconforto_calculado_x > saidas\desconforto_calculado.xls;
+display desconforto_x > saidas\desconforto_x.xls;
 
 printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Índice de Desconforto\n" > saidas\saidas_funcoes_objetivo.txt;
 
-printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/card(Ot)/card(AC) > saidas\saidas_funcoes_objetivo.txt;
+printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_x[w,t,f]/card(Ot)/card(AC) > saidas\saidas_funcoes_objetivo.txt;
 
 printf "Consumo de Energia com Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
 printf "%4f \n", sum{x in AC}saida_fo_gasto_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
@@ -32,7 +32,6 @@ printf "%4f \n", sum{x in AC}saida_fo_gasto_com_bateria_e_paineis[x] > saidas\sa
 
 printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
 printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
-
 
 option omit_zero_cols 0;
 
