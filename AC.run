@@ -52,10 +52,10 @@ for {w in AC} {
 
 	let z := w;
 
-		#solve fo_desconforto;
+		solve fo_desconforto;
 		#solve fo_gasto_sem_bateria;
 		#solve fo_gasto_com_bateria;
-		solve fo_gasto_com_bateria_e_paineis;
+		#solve fo_gasto_com_bateria_e_paineis;
 		#solve fo_gasto_com_bateria_e_paineis_ao_quadrado;
 		#solve xxx;
 
@@ -101,8 +101,6 @@ for {w in AC} {
 		}
 
 }
-
-#display carga_bateria_x > saidas\carga_bateria_x.xls;
 
 data AC_saidas.dat;
 
