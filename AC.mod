@@ -6,7 +6,6 @@ set Of = 1 .. 3 by 1;   		# Conjunto de fases
 
 param dT := 15/60;         		# Detal t = 15 min * 60 segundos (48 pontos)
 param neper := 2.71828;
-param z;
 
 # Parâmetros de carga
 
@@ -88,26 +87,26 @@ param PFV_Fase_c{PFV};  			# Determina operação dos PFV da Fase C
 # FUNÇÕES OBJETIVO
 
 minimize fo_desconforto: 
-						(sum {t in Ot : AC_Fase_a[z] == 1} (desconforto[z,t,1]))/card(Ot) + 
-                        (sum {t in Ot : AC_Fase_b[z] == 1} (desconforto[z,t,2]))/card(Ot) + 
-                        (sum {t in Ot : AC_Fase_c[z] == 1} (desconforto[z,t,3]))/card(Ot) ;
+						(sum {t in Ot, w in AC : AC_Fase_a[w] == 1} (desconforto[w,t,1]))/card(Ot) + 
+                        (sum {t in Ot, w in AC : AC_Fase_b[w] == 1} (desconforto[w,t,2]))/card(Ot) + 
+                        (sum {t in Ot, w in AC : AC_Fase_c[w] == 1} (desconforto[w,t,3]))/card(Ot) ;
 
 minimize fo_gasto_sem_bateria: 
-						sum {t in Ot, f in Of} Pac[z,t,f] * tarifa_branca[t] * dT * preco_energia;
+						sum {t in Ot, f in Of, w in AC} Pac[w,t,f] * tarifa_branca[t] * dT * preco_energia;
 				
 minimize fo_gasto_com_bateria: 
-						sum {t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
+						sum {t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f]) * tarifa_branca[t] * dT * preco_energia;
 						
 minimize fo_gasto_com_bateria_e_paineis: 
-						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
-						#sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * dT * preco_energia;
+						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * tarifa_branca[t] * dT * preco_energia;
+						#sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * dT * preco_energia;
 						
 minimize fo_gasto_com_bateria_e_paineis_ao_quadrado: 
-						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
+						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
 
 minimize xxx: 
-						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia
-						+ sum{t in Ot, f in Of} <<0 , 2 ; 0 , 0 , 999999 >> desconforto[z,t,f]/card(Ot)
+						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * tarifa_branca[t] * dT * preco_energia
+						+ sum{t in Ot, f in Of, w in AC} <<0 , 2 ; 0 , 0 , 999999 >> desconforto[w,t,f]/card(Ot)
 						;
 
 #############################################################################					
@@ -118,109 +117,109 @@ minimize xxx:
 
 param Tinicial = 1.5;
 
-	subject to Tin_1_a {t in Ot : t = 1 and AC_Fase_a[z] = 1}:
-	 Tin[z,t,1] = Tset_casa[z] + Tinicial;    
+	subject to Tin_1_a {t in Ot, w in AC : t = 1 and AC_Fase_a[w] = 1}:
+	 Tin[w,t,1] = Tset_casa[w] + Tinicial;    
 
-	subject to Tin_1_b {t in Ot : t = 1 and AC_Fase_b[z] = 1}:
-	 Tin[z,t,2] = Tset_casa[z] + Tinicial;    
+	subject to Tin_1_b {t in Ot, w in AC : t = 1 and AC_Fase_b[w] = 1}:
+	 Tin[w,t,2] = Tset_casa[w] + Tinicial;    
 
-	subject to Tin_1_c {t in Ot : t = 1 and AC_Fase_c[z] = 1}:
-	 Tin[z,t,3] = Tset_casa[z] + Tinicial;    
+	subject to Tin_1_c {t in Ot, w in AC : t = 1 and AC_Fase_c[w] = 1}:
+	 Tin[w,t,3] = Tset_casa[w] + Tinicial;    
 
-	subject to Tin_1_a0 {t in Ot  : t = 1 and AC_Fase_a[z] = 0}:
-	 Tin[z,t,1] = 0;                     
+	subject to Tin_1_a0 {t in Ot, w in AC : t = 1 and AC_Fase_a[w] = 0}:
+	 Tin[w,t,1] = 0;                     
 
-	subject to Tin_1_b0 {t in Ot  : t = 1 and AC_Fase_b[z] = 0}:
-	 Tin[z,t,2] = 0;                     
+	subject to Tin_1_b0 {t in Ot, w in AC : t = 1 and AC_Fase_b[w] = 0}:
+	 Tin[w,t,2] = 0;                     
 
-	subject to Tin_1_c0 {t in Ot  : t = 1 and AC_Fase_c[z] = 0}:
-	 Tin[z,t,3] = 0;
+	subject to Tin_1_c0 {t in Ot, w in AC : t = 1 and AC_Fase_c[w] = 0}:
+	 Tin[w,t,3] = 0;
 	 
 ## Parede ##
-	subject to Tparede_1_a {t in Ot : t = 1 and AC_Fase_a[z] = 1}:
-	 Tparede[z,t,1] = Tset_casa[z] + Tinicial;
+	subject to Tparede_1_a {t in Ot, w in AC : t = 1 and AC_Fase_a[w] = 1}:
+	 Tparede[w,t,1] = Tset_casa[w] + Tinicial;
 	 
-	subject to Tparede_1_b {t in Ot : t = 1 and AC_Fase_b[z] = 1}:
-	 Tparede[z,t,2] = Tset_casa[z] + Tinicial;
+	subject to Tparede_1_b {t in Ot, w in AC : t = 1 and AC_Fase_b[w] = 1}:
+	 Tparede[w,t,2] = Tset_casa[w] + Tinicial;
 	 
-	subject to Tparede_1_c {t in Ot : t = 1 and AC_Fase_c[z] = 1}:
-	 Tparede[z,t,3] = Tset_casa[z] + Tinicial;
+	subject to Tparede_1_c {t in Ot, w in AC : t = 1 and AC_Fase_c[w] = 1}:
+	 Tparede[w,t,3] = Tset_casa[w] + Tinicial;
 	 
-	subject to Tparede_1_a0 {t in Ot : t = 1 and AC_Fase_a[z] = 0}:
-	 Tparede[z,t,1] = 0;
+	subject to Tparede_1_a0 {t in Ot, w in AC : t = 1 and AC_Fase_a[w] = 0}:
+	 Tparede[w,t,1] = 0;
 	 
-	subject to Tparede_1_b0 {t in Ot : t = 1 and AC_Fase_b[z] = 0}:
-	 Tparede[z,t,2] = 0;
+	subject to Tparede_1_b0 {t in Ot, w in AC : t = 1 and AC_Fase_b[w] = 0}:
+	 Tparede[w,t,2] = 0;
 	 
-	subject to Tparede_1_c0 {t in Ot : t = 1 and AC_Fase_c[z] = 0}:
-	 Tparede[z,t,3] = 0;
+	subject to Tparede_1_c0 {t in Ot, w in AC : t = 1 and AC_Fase_c[w] = 0}:
+	 Tparede[w,t,3] = 0;
 	  
 ## Tin 2 ##
  
 param dTemp = 2;
 
-	subject to Tin_2a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] <= Tset_casa[z] + dTemp;
+	subject to Tin_2a {t in Ot, w in AC : t > 1 and AC_Fase_a[w] = 1}:
+	Tin[w,t,1] <= Tset_casa[w] + dTemp;
 	
-	subject to Tin_2b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] <= Tset_casa[z] + dTemp;
+	subject to Tin_2b {t in Ot, w in AC : t > 1 and AC_Fase_b[w] = 1}:
+	Tin[w,t,2] <= Tset_casa[w] + dTemp;
 	
-	subject to Tin_2c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] <= Tset_casa[z] + dTemp;
+	subject to Tin_2c {t in Ot, w in AC : t > 1 and AC_Fase_c[w] = 1}:
+	Tin[w,t,3] <= Tset_casa[w] + dTemp;
  
 ## Tin 3 ##
 		 
-	subject to Tin_3a {t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] >= Tset_casa[z] - dTemp;
+	subject to Tin_3a {t in Ot, w in AC : t > 1 and AC_Fase_a[w] = 1}:
+	Tin[w,t,1] >= Tset_casa[w] - dTemp;
 	
-	subject to Tin_3b {t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] >= Tset_casa[z] - dTemp;  
+	subject to Tin_3b {t in Ot, w in AC : t > 1 and AC_Fase_b[w] = 1}:
+	Tin[w,t,2] >= Tset_casa[w] - dTemp;  
 	
-	subject to Tin_3c {t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] >= Tset_casa[z] - dTemp;
+	subject to Tin_3c {t in Ot, w in AC : t > 1 and AC_Fase_c[w] = 1}:
+	Tin[w,t,3] >= Tset_casa[w] - dTemp;
 
 ## Frequency Min ##
 
-	subject to frequency_ac_min_a{t in Ot : AC_Fase_a[z] = 1}:
-		frequency_ac[z,t,1] >= 20 * on_off[z,t,1];
-#		frequency_ac[z,t,1] >= 20;
+	subject to frequency_ac_min_a{t in Ot, w in AC : AC_Fase_a[w] = 1}:
+		frequency_ac[w,t,1] >= 20 * on_off[w,t,1];
+#		frequency_ac[w,t,1] >= 20;
 
-	subject to frequency_ac_min_b{t in Ot : AC_Fase_b[z] = 1}:
-		frequency_ac[z,t,2] >= 20 * on_off[z,t,2];
-#		frequency_ac[z,t,2] >= 20;
+	subject to frequency_ac_min_b{t in Ot, w in AC : AC_Fase_b[w] = 1}:
+		frequency_ac[w,t,2] >= 20 * on_off[w,t,2];
+#		frequency_ac[w,t,2] >= 20;
 
-	subject to frequency_ac_min_c{t in Ot : AC_Fase_c[z] = 1}:
-		frequency_ac[z,t,3] >= 20 * on_off[z,t,3];
-#		frequency_ac[z,t,3] >= 20;
+	subject to frequency_ac_min_c{t in Ot, w in AC : AC_Fase_c[w] = 1}:
+		frequency_ac[w,t,3] >= 20 * on_off[w,t,3];
+#		frequency_ac[w,t,3] >= 20;
 
-	subject to frequency_ac_min_a0{t in Ot : AC_Fase_a[z] = 0}:
-		frequency_ac[z,t,1] = 0;
+	subject to frequency_ac_min_a0{t in Ot, w in AC : AC_Fase_a[w] = 0}:
+		frequency_ac[w,t,1] = 0;
 
-	subject to frequency_ac_min_b0{t in Ot : AC_Fase_b[z] = 0}:
-		frequency_ac[z,t,2] = 0;
+	subject to frequency_ac_min_b0{t in Ot, w in AC : AC_Fase_b[w] = 0}:
+		frequency_ac[w,t,2] = 0;
 		
-	subject to frequency_ac_min_c0{t in Ot : AC_Fase_c[z] = 0}:
-		frequency_ac[z,t,3] = 0;
+	subject to frequency_ac_min_c0{t in Ot, w in AC : AC_Fase_c[w] = 0}:
+		frequency_ac[w,t,3] = 0;
 
 ## Frequency Max ##
 	
-	subject to frequency_ac_max{t in Ot, f in Of}:
-		frequency_ac[z,t,f] <= 90 * on_off[z,t,f];
-#		frequency_ac[z,t,f] <= 90;
+	subject to frequency_ac_max{t in Ot, f in Of, w in AC}:
+		frequency_ac[w,t,f] <= 90 * on_off[w,t,f];
+#		frequency_ac[w,t,f] <= 90;
 	   
 ## Mod Pac Freq ##
  
-	subject to modificador_Pac_freq_a{t in Ot : AC_Fase_a[z] = 1}:
-	 mod_Pac_freq[z,t,1] = (0.0136 * frequency_ac[z,t,1] - 0.0456 * on_off[z,t,1]);
-#	 mod_Pac_freq[z,t,1] = (0.0136 * frequency_ac[z,t,1] - 0.0456);
+	subject to modificador_Pac_freq_a{t in Ot, w in AC : AC_Fase_a[w] = 1}:
+	 mod_Pac_freq[w,t,1] = (0.0136 * frequency_ac[w,t,1] - 0.0456 * on_off[w,t,1]);
+#	 mod_Pac_freq[w,t,1] = (0.0136 * frequency_ac[w,t,1] - 0.0456);
 	 
-	subject to modificador_Pac_freq_b{t in Ot : AC_Fase_b[z] = 1}:
-	 mod_Pac_freq[z,t,2] = (0.0136 * frequency_ac[z,t,2] - 0.0456 * on_off[z,t,2]);
-#	 mod_Pac_freq[z,t,2] = (0.0136 * frequency_ac[z,t,2] - 0.0456);
+	subject to modificador_Pac_freq_b{t in Ot, w in AC : AC_Fase_b[w] = 1}:
+	 mod_Pac_freq[w,t,2] = (0.0136 * frequency_ac[w,t,2] - 0.0456 * on_off[w,t,2]);
+#	 mod_Pac_freq[w,t,2] = (0.0136 * frequency_ac[w,t,2] - 0.0456);
 	 
-	subject to modificador_Pac_freq_c{t in Ot : AC_Fase_c[z] = 1}:
-	 mod_Pac_freq[z,t,3] = (0.0136 * frequency_ac[z,t,3] - 0.0456 * on_off[z,t,3]);
-#	 mod_Pac_freq[z,t,3] = (0.0136 * frequency_ac[z,t,3] - 0.0456);
+	subject to modificador_Pac_freq_c{t in Ot, w in AC : AC_Fase_c[w] = 1}:
+	 mod_Pac_freq[w,t,3] = (0.0136 * frequency_ac[w,t,3] - 0.0456 * on_off[w,t,3]);
+#	 mod_Pac_freq[w,t,3] = (0.0136 * frequency_ac[w,t,3] - 0.0456);
 
 
 ## Mod Pac Tout ##	 
@@ -230,17 +229,17 @@ param dTemp = 2;
  
 ## Mod Qac Freq ##
  
-	subject to modificador_Qac_freq_a{t in Ot : AC_Fase_a[z] = 1}:
-	 mod_Qac_freq[z,t,1] = (0.0121 * frequency_ac[z,t,1] + 0.0199 * on_off[z,t,1]);
-#	 mod_Qac_freq[z,t,1] = (0.0121 * frequency_ac[z,t,1] + 0.0199);
+	subject to modificador_Qac_freq_a{t in Ot, w in AC : AC_Fase_a[w] = 1}:
+	 mod_Qac_freq[w,t,1] = (0.0121 * frequency_ac[w,t,1] + 0.0199 * on_off[w,t,1]);
+#	 mod_Qac_freq[w,t,1] = (0.0121 * frequency_ac[w,t,1] + 0.0199);
 	 
-	subject to modificador_Qac_freq_b{t in Ot : AC_Fase_b[z] = 1}:
-	 mod_Qac_freq[z,t,2] = (0.0121 * frequency_ac[z,t,2] + 0.0199 * on_off[z,t,2]);
-#	 mod_Qac_freq[z,t,2] = (0.0121 * frequency_ac[z,t,2] + 0.0199);
+	subject to modificador_Qac_freq_b{t in Ot, w in AC : AC_Fase_b[w] = 1}:
+	 mod_Qac_freq[w,t,2] = (0.0121 * frequency_ac[w,t,2] + 0.0199 * on_off[w,t,2]);
+#	 mod_Qac_freq[w,t,2] = (0.0121 * frequency_ac[w,t,2] + 0.0199);
 	 
-	subject to modificador_Qac_freq_c{t in Ot : AC_Fase_c[z] = 1}:
-	 mod_Qac_freq[z,t,3] = (0.0121 * frequency_ac[z,t,3] + 0.0199 * on_off[z,t,3]);
-#	 mod_Qac_freq[z,t,3] = (0.0121 * frequency_ac[z,t,3] + 0.0199);
+	subject to modificador_Qac_freq_c{t in Ot, w in AC : AC_Fase_c[w] = 1}:
+	 mod_Qac_freq[w,t,3] = (0.0121 * frequency_ac[w,t,3] + 0.0199 * on_off[w,t,3]);
+#	 mod_Qac_freq[w,t,3] = (0.0121 * frequency_ac[w,t,3] + 0.0199);
 
 # Mod Qac Tout ##
 		 
@@ -249,78 +248,78 @@ param dTemp = 2;
  
 ## Pac ##
  
-	subject to restricao_Pac_a{t in Ot : AC_Fase_a[z] = 1}:
-	Pac[z,t,1] = 0.86 * Pnom_ac[z] * mod_Pac_freq[z,t,1] * mod_Pac_Tout[t];
+	subject to restricao_Pac_a{t in Ot, w in AC : AC_Fase_a[w] = 1}:
+	Pac[w,t,1] = 0.86 * Pnom_ac[w] * mod_Pac_freq[w,t,1] * mod_Pac_Tout[t];
 	
-	subject to restricao_Pac_b{t in Ot : AC_Fase_b[z] = 1}:
-	Pac[z,t,2] = 0.86 * Pnom_ac[z] * mod_Pac_freq[z,t,2] * mod_Pac_Tout[t];
+	subject to restricao_Pac_b{t in Ot, w in AC : AC_Fase_b[w] = 1}:
+	Pac[w,t,2] = 0.86 * Pnom_ac[w] * mod_Pac_freq[w,t,2] * mod_Pac_Tout[t];
 	
-	subject to restricao_Pac_c{t in Ot : AC_Fase_c[z] = 1}:
-	Pac[z,t,3] = 0.86 * Pnom_ac[z] * mod_Pac_freq[z,t,3] * mod_Pac_Tout[t];
+	subject to restricao_Pac_c{t in Ot, w in AC : AC_Fase_c[w] = 1}:
+	Pac[w,t,3] = 0.86 * Pnom_ac[w] * mod_Pac_freq[w,t,3] * mod_Pac_Tout[t];
  
 ## Qac ##
 
-	subject to restricao_Qac_a{t in Ot : AC_Fase_a[z] = 1}:
-	Qac[z,t,1] =  1.20 * Pnom_ac[z] * COP_nom[z] * mod_Qac_freq[z,t,1] * mod_Qac_Tout[t];
+	subject to restricao_Qac_a{t in Ot, w in AC : AC_Fase_a[w] = 1}:
+	Qac[w,t,1] =  1.20 * Pnom_ac[w] * COP_nom[w] * mod_Qac_freq[w,t,1] * mod_Qac_Tout[t];
 	
-	subject to restricao_Qac_b{t in Ot : AC_Fase_b[z] = 1}:
-	Qac[z,t,2] =  1.20 * Pnom_ac[z] * COP_nom[z] * mod_Qac_freq[z,t,2] * mod_Qac_Tout[t];
+	subject to restricao_Qac_b{t in Ot, w in AC : AC_Fase_b[w] = 1}:
+	Qac[w,t,2] =  1.20 * Pnom_ac[w] * COP_nom[w] * mod_Qac_freq[w,t,2] * mod_Qac_Tout[t];
 	
-	subject to restricao_Qac_c{t in Ot : AC_Fase_c[z] = 1}:
-	Qac[z,t,3] =  1.20 * Pnom_ac[z] * COP_nom[z] * mod_Qac_freq[z,t,3] * mod_Qac_Tout[t];
+	subject to restricao_Qac_c{t in Ot, w in AC : AC_Fase_c[w] = 1}:
+	Qac[w,t,3] =  1.20 * Pnom_ac[w] * COP_nom[w] * mod_Qac_freq[w,t,3] * mod_Qac_Tout[t];
 	
-	subject to restricao_a{t in Ot}:
-	var_a[z] = neper ^ ( - (Ra[z]+Rm[z])/(Ra[z]*Rm[z]*Ca[z]) * dT );
+	subject to restricao_a{t in Ot, w in AC}:
+	var_a[w] = neper ^ ( - (Ra[w]+Rm[w])/(Ra[w]*Rm[w]*Ca[w]) * dT );
 	
-	subject to restricao_b{t in Ot}:
-	var_b[z] = neper ^ ( - 1 / (Rm[z] * Cm[z]) * dT );
+	subject to restricao_b{t in Ot, w in AC}:
+	var_b[w] = neper ^ ( - 1 / (Rm[w] * Cm[w]) * dT );
 	
-	subject to restricao_Tin_a{t in Ot : t > 1 and AC_Fase_a[z] = 1}:
-	Tin[z,t,1] = var_a[z] * Tin[z,t-1,1] + (1 - var_a[z]) * Ra[z]/(Ra[z] + Rm[z]) * Tparede[z,t-1,1] +
-	(1 - var_a[z])*(Rm[z]/(Ra[z] + Rm[z])*Tout[t-1] - (Ra[z]*Rm[z])/(Ra[z]+Rm[z]) * Qac[z,t-1,1]);
+	subject to restricao_Tin_a{t in Ot, w in AC : t > 1 and AC_Fase_a[w] = 1}:
+	Tin[w,t,1] = var_a[w] * Tin[w,t-1,1] + (1 - var_a[w]) * Ra[w]/(Ra[w] + Rm[w]) * Tparede[w,t-1,1] +
+	(1 - var_a[w])*(Rm[w]/(Ra[w] + Rm[w])*Tout[t-1] - (Ra[w]*Rm[w])/(Ra[w]+Rm[w]) * Qac[w,t-1,1]);
 	
-	subject to restricao_Tin_b{t in Ot : t > 1 and AC_Fase_b[z] = 1}:
-	Tin[z,t,2] = var_a[z] * Tin[z,t-1,2] + (1 - var_a[z]) * Ra[z]/(Ra[z] + Rm[z]) * Tparede[z,t-1,2] +
-	(1 - var_a[z])*(Rm[z]/(Ra[z] + Rm[z])*Tout[t-1] - (Ra[z]*Rm[z])/(Ra[z]+Rm[z]) * Qac[z,t-1,2]);
+	subject to restricao_Tin_b{t in Ot, w in AC : t > 1 and AC_Fase_b[w] = 1}:
+	Tin[w,t,2] = var_a[w] * Tin[w,t-1,2] + (1 - var_a[w]) * Ra[w]/(Ra[w] + Rm[w]) * Tparede[w,t-1,2] +
+	(1 - var_a[w])*(Rm[w]/(Ra[w] + Rm[w])*Tout[t-1] - (Ra[w]*Rm[w])/(Ra[w]+Rm[w]) * Qac[w,t-1,2]);
 	
-	subject to restricao_Tin_c{t in Ot : t > 1 and AC_Fase_c[z] = 1}:
-	Tin[z,t,3] = var_a[z] * Tin[z,t-1,3] + (1 - var_a[z]) * Ra[z]/(Ra[z] + Rm[z]) * Tparede[z,t-1,3] +
-	(1 - var_a[z])*(Rm[z]/(Ra[z] + Rm[z])*Tout[t-1] - (Ra[z]*Rm[z])/(Ra[z]+Rm[z]) * Qac[z,t-1,3]);
+	subject to restricao_Tin_c{t in Ot, w in AC : t > 1 and AC_Fase_c[w] = 1}:
+	Tin[w,t,3] = var_a[w] * Tin[w,t-1,3] + (1 - var_a[w]) * Ra[w]/(Ra[w] + Rm[w]) * Tparede[w,t-1,3] +
+	(1 - var_a[w])*(Rm[w]/(Ra[w] + Rm[w])*Tout[t-1] - (Ra[w]*Rm[w])/(Ra[w]+Rm[w]) * Qac[w,t-1,3]);
 	
-	subject to restricao_Tin_a0{t in Ot : t > 1 and AC_Fase_a[z] = 0}:
-	Tin[z,t,1] = 0;
+	subject to restricao_Tin_a0{t in Ot, w in AC : t > 1 and AC_Fase_a[w] = 0}:
+	Tin[w,t,1] = 0;
 	
-	subject to restricao_Tin_b0{t in Ot : t > 1 and AC_Fase_b[z] = 0}:
-	Tin[z,t,2] = 0;
+	subject to restricao_Tin_b0{t in Ot, w in AC : t > 1 and AC_Fase_b[w] = 0}:
+	Tin[w,t,2] = 0;
 	
-	subject to restricao_Tin_c0{t in Ot : t > 1 and AC_Fase_c[z] = 0}:
-	Tin[z,t,3] = 0;
+	subject to restricao_Tin_c0{t in Ot, w in AC : t > 1 and AC_Fase_c[w] = 0}:
+	Tin[w,t,3] = 0;
 	
-	subject to restricao_Tparede{t in Ot, f in Of : t > 1}:
-	Tparede[z,t,f] = var_b[z] * Tparede[z,t-1,f] + (1 - var_b[z]) * Tin[z,t-1,f];
+	subject to restricao_Tparede{t in Ot, f in Of, w in AC : t > 1}:
+	Tparede[w,t,f] = var_b[w] * Tparede[w,t-1,f] + (1 - var_b[w]) * Tin[w,t-1,f];
 
 # Restrições de desconforto
 
-	subject to conforto_1a{t in Ot : AC_Fase_a[z] == 1}:
-	desconforto[z,t,1] = Taux1[z,t,1] + Taux2[z,t,1];
+	subject to conforto_1a{t in Ot, w in AC : AC_Fase_a[w] == 1}:
+	desconforto[w,t,1] = Taux1[w,t,1] + Taux2[w,t,1];
 	
-	subject to conforto_1b{t in Ot : AC_Fase_b[z] == 1}:
-	desconforto[z,t,2] = Taux1[z,t,2] + Taux2[z,t,2];
+	subject to conforto_1b{t in Ot, w in AC : AC_Fase_b[w] == 1}:
+	desconforto[w,t,2] = Taux1[w,t,2] + Taux2[w,t,2];
 	
-	subject to conforto_1c{t in Ot : AC_Fase_c[z] == 1}:
-	desconforto[z,t,3] = Taux1[z,t,3] + Taux2[z,t,3];
+	subject to conforto_1c{t in Ot, w in AC : AC_Fase_c[w] == 1}:
+	desconforto[w,t,3] = Taux1[w,t,3] + Taux2[w,t,3];
 	
-	subject to conforto_2a{t in Ot : AC_Fase_a[z] = 0}:
-	desconforto[z,t,1] = 0;
+	subject to conforto_2a{t in Ot, w in AC : AC_Fase_a[w] = 0}:
+	desconforto[w,t,1] = 0;
 	
-	subject to conforto_2b{t in Ot : AC_Fase_b[z] = 0}:
-	desconforto[z,t,2] = 0;
+	subject to conforto_2b{t in Ot, w in AC : AC_Fase_b[w] = 0}:
+	desconforto[w,t,2] = 0;
 	
-	subject to conforto_2c{t in Ot : AC_Fase_c[z] = 0}:
-	desconforto[z,t,3] = 0;
+	subject to conforto_2c{t in Ot, w in AC : AC_Fase_c[w] = 0}:
+	desconforto[w,t,3] = 0;
 	
-	subject to conforto_3{t in Ot, f in Of}:
-	Tin[z,t,f] - Tset_casa[z] = Taux1[z,t,f] - Taux2[z,t,f]; 
+	subject to conforto_3{t in Ot, f in Of, w in AC}:
+	Tin[w,t,f] - Tset_casa[w] = Taux1[w,t,f] - Taux2[w,t,f]; 
 
 # END AC
 
