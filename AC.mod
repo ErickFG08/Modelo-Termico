@@ -100,7 +100,8 @@ minimize fo_gasto_com_bateria:
 						
 minimize fo_gasto_com_bateria_e_paineis: 
 						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * tarifa_branca[t] * dT * preco_energia;
-
+						#sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f]) * dT * preco_energia;
+						
 minimize fo_gasto_com_bateria_e_paineis_ao_quadrado: 
 						sum{t in Ot, f in Of} (Pac[z,t,f] - pot_bateria[z,t,f] + pot_pfv[z,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
 
