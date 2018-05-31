@@ -98,11 +98,13 @@ minimize fo_gasto_com_bateria:
 						sum {t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f]) * tarifa_branca[t] * dT * preco_energia;
 						
 minimize fo_gasto_com_bateria_e_paineis: 
-						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * tarifa_branca[t] * dT * preco_energia;
-						#sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * dT * preco_energia;
+						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f]) * dT * preco_energia;
 						
+#minimize fo_gasto_com_bateria_e_paineis_ao_quadrado: 
+#						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
+
 minimize fo_gasto_com_bateria_e_paineis_ao_quadrado: 
-						sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
+						 sum{t in Ot, f in Of, w in AC} (Pac[w,t,f] - pot_bateria[w,t,f] + pot_pfv[w,t,f])^2 * tarifa_branca[t] * dT * preco_energia;
 
 #############################################################################					
 					
