@@ -41,6 +41,3 @@ display pot_bateria_x > saidas\pot_bateria_nao_cooperativo.xls;
 display pot_pfv_x > saidas\pot_pfv_nao_cooperativo.xls;
 
 option omit_zero_cols 1;
-
-
-
