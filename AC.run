@@ -54,8 +54,8 @@ for {w in AC} {
 		#solve fo_desconforto;
 		#solve fo_gasto_sem_bateria;
 		#solve fo_gasto_com_bateria;
-		solve fo_gasto_com_bateria_e_paineis;
-		#solve fo_gasto_com_bateria_e_paineis_ao_quadrado;
+		#solve fo_gasto_com_bateria_e_paineis;
+		solve fo_gasto_com_bateria_e_paineis_ao_quadrado;
 
 	let saida_fo_desconforto[z]                 			:= fo_desconforto;
 	let saida_fo_gasto_sem_bateria[z]	        			:= fo_gasto_sem_bateria;
@@ -75,24 +75,24 @@ for {w in AC} {
 					let COP_x[w,t,f] := Qac[w,t,f]/Pac[w,t,f];
 					}
 
-				let desconforto_x[z,t,1] := abs(Tin[z,t,1] - Tset_casa[z]) * AC_Fase_a[z];
-				let desconforto_x[z,t,2] := abs(Tin[z,t,2] - Tset_casa[z]) * AC_Fase_b[z];
-				let desconforto_x[z,t,3] := abs(Tin[z,t,3] - Tset_casa[z]) * AC_Fase_c[z];
+				    let desconforto_x[z,t,1] := abs(Tin[z,t,1] - Tset_casa[z]) * AC_Fase_a[z];
+				    let desconforto_x[z,t,2] := abs(Tin[z,t,2] - Tset_casa[z]) * AC_Fase_b[z];
+				    let desconforto_x[z,t,3] := abs(Tin[z,t,3] - Tset_casa[z]) * AC_Fase_c[z];
 
-				let carga_bateria_x[z,t,f] := carga_bateria[z,t,f];
-				let Pac_x[z,t,f] := Pac[z,t,f];
-				let Qac_x[z,t,f] := Qac[z,t,f];
-				let Tin_x[z,t,f] := Tin[z,t,f];
-				let Tparede_x[z,t,f] := Tparede[z,t,f];
-				let Tout_x[t] := Tout[t];
-				let on_off_x[z,t,f] := on_off[z,t,f];
-				let mod_Pac_freq_x[z,t,f] := mod_Pac_freq[z,t,f];
-				let mod_Qac_freq_x[z,t,f] := mod_Qac_freq[z,t,f];
-				let mod_Pac_Tout_x[t] := mod_Pac_Tout[t];
-				let mod_Qac_Tout_x[t] := mod_Qac_Tout[t];
-				let frequency_ac_x[z,t,f] := frequency_ac[z,t,f];
-				let pot_bateria_x[z,t,f] := pot_bateria[z,t,f];
-				let pot_pfv_x[z,t,f] := pot_pfv[z,t,f];
+				    let carga_bateria_x[z,t,f] := carga_bateria[z,t,f];
+				    let Pac_x[z,t,f] := Pac[z,t,f];
+				    let Qac_x[z,t,f] := Qac[z,t,f];
+				    let Tin_x[z,t,f] := Tin[z,t,f];
+				    let Tparede_x[z,t,f] := Tparede[z,t,f];
+				    let Tout_x[t] := Tout[t];
+				    let on_off_x[z,t,f] := on_off[z,t,f];
+				    let mod_Pac_freq_x[z,t,f] := mod_Pac_freq[z,t,f];
+				    let mod_Qac_freq_x[z,t,f] := mod_Qac_freq[z,t,f];
+				    let mod_Pac_Tout_x[t] := mod_Pac_Tout[t];
+				    let mod_Qac_Tout_x[t] := mod_Qac_Tout[t];
+				    let frequency_ac_x[z,t,f] := frequency_ac[z,t,f];
+				    let pot_bateria_x[z,t,f] := pot_bateria[z,t,f];
+				    let pot_pfv_x[z,t,f] := pot_pfv[z,t,f];
 
 				}
 		}

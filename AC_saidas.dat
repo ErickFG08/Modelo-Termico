@@ -44,3 +44,16 @@ display pot_bateria_x > saidas\pot_bateria_nao_cooperativo.xls;
 display pot_pfv_x > saidas\pot_pfv_nao_cooperativo.xls;
 
 option omit_zero_cols 1;
+
+param perdas{Ot,Of};
+
+for {t in Ot}
+{
+    for{f in Of}
+        {   
+        let perdas[t,f] := sum{x in AC}(Pac[x,t,f] - pot_bateria[x,t,f] + pot_pfv[x,t,f])^2 * tarifa_branca[t] * dT * preco_energia;  
+        }
+}
+
+display perdas > saidas\perdas.xls;
+
