@@ -28,7 +28,6 @@ param saida_fo_gasto_sem_bateria{w in AC};
 param saida_fo_gasto_com_bateria{w in AC};
 param saida_fo_gasto_com_bateria_e_paineis{w in AC};
 param saida_fo_gasto_com_bateria_e_paineis_ao_quadrado{w in AC};
-param saida_xxx{w in AC};
 
 param carga_bateria_x{BAT,Ot,Of};
 param Pac_x{AC,Ot,Of};
@@ -57,14 +56,12 @@ for {w in AC} {
 		#solve fo_gasto_com_bateria;
 		solve fo_gasto_com_bateria_e_paineis;
 		#solve fo_gasto_com_bateria_e_paineis_ao_quadrado;
-		#solve xxx;
 
 	let saida_fo_desconforto[z]                 			:= fo_desconforto;
 	let saida_fo_gasto_sem_bateria[z]	        			:= fo_gasto_sem_bateria;
 	let saida_fo_gasto_com_bateria[z]	        			:= fo_gasto_com_bateria;
 	let saida_fo_gasto_com_bateria_e_paineis[z] 			:= fo_gasto_com_bateria_e_paineis;
 	let saida_fo_gasto_com_bateria_e_paineis_ao_quadrado[z] := fo_gasto_com_bateria_e_paineis_ao_quadrado;
-	let saida_xxx[z]									 	:= xxx;
 
 	for{t in Ot}
 		{
