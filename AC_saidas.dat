@@ -30,6 +30,9 @@ printf "%4f \n", sum{x in AC}saida_fo_gasto_com_bateria[x] > saidas\funcoes_obje
 printf "Consumo de Energia com Tarifa Branca com baterias e paineis\n" > saidas\funcoes_objetivo_nao_cooperativo.txt;
 printf "%4f \n", sum{x in AC}saida_fo_gasto_com_bateria_e_paineis[x] > saidas\funcoes_objetivo_nao_cooperativo.txt;
 
+printf "Consumo de Energia com Tarifa Branca com baterias e paineis ao quadrado\n" > saidas\funcoes_objetivo_nao_cooperativo.txt;
+printf "%4f \n", sum{x in AC}saida_fo_gasto_com_bateria_e_paineis_ao_quadrado[x] > saidas\funcoes_objetivo_nao_cooperativo.txt;
+
 printf "----------------------------------------------------------------------------\n" >> saidas\funcoes_objetivo_nao_cooperativo.txt;
 printf "----------------------------------------------------------------------------\n\n" >> saidas\funcoes_objetivo_nao_cooperativo.txt;
 
