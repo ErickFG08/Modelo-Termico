@@ -38,11 +38,11 @@ var desconforto_calculado{AC,Ot,Of};
 	}
  }	display desconforto_calculado > saidas\desconforto_calculado_cooperativo.xls;
 
-printf "\nModelo Cooperativo \n\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "\nModelo Cooperativo \n" > saidas\funcoes_objetivo_cooperativo.txt;
 
 printf "\nTempo de Execucao: %f minutos \n", _solve_elapsed_time/60 > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "Índice de Desconforto\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "\nÍndice de Desconforto\n" > saidas\funcoes_objetivo_cooperativo.txt;
 printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo_cooperativo.txt;
 
 printf "Consumo de Energia com Tarifa Branca\n" > saidas\funcoes_objetivo_cooperativo.txt;
