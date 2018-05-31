@@ -37,6 +37,8 @@ var desconforto_calculado{AC,Ot,Of};
 	}
  }	display desconforto_calculado > saidas\desconforto_calculado.xls;
 
+printf "\nModelo Cooperativo \n\n" > saidas\funcoes_objetivo.txt;
+
 printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\funcoes_objetivo.txt;
 
 printf "Índice de Desconforto\n" > saidas\funcoes_objetivo.txt;
