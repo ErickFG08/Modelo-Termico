@@ -13,7 +13,7 @@ display mod_Qac_freq_x > saidas\mod_Qac_freq_nao_cooperativo.xls;
 display mod_Pac_Tout_x > saidas\mod_Pac_Tout_nao_cooperativo.xls;
 display mod_Qac_Tout_x > saidas\mod_Qac_Tout_nao_cooperativo.xls;
 
-printf "\nModelo Não-Cooperativo \n\n" > saidas\funcoes_objetivo_nao_cooperativo.txt;
+printf "\nModelo Não-Cooperativo \n" > saidas\funcoes_objetivo_nao_cooperativo.txt;
 
 printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\funcoes_objetivo_nao_cooperativo.txt;
 
