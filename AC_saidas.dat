@@ -40,12 +40,9 @@ var desconforto_calculado{AC,Ot,Of};
 
 printf "\nModelo Cooperativo \n\n" > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\funcoes_objetivo_cooperativo.txt;
+printf "\nTempo de Execucao: %f minutos \n", _solve_elapsed_time/60 > saidas\funcoes_objetivo_cooperativo.txt;
 
 printf "Índice de Desconforto\n" > saidas\funcoes_objetivo_cooperativo.txt;
-printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo_cooperativo.txt;
-
-printf "Índice de Desconforto Calculado\n" > saidas\funcoes_objetivo_cooperativo.txt;
 printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo_cooperativo.txt;
 
 printf "Consumo de Energia com Tarifa Branca\n" > saidas\funcoes_objetivo_cooperativo.txt;
