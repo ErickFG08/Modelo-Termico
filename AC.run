@@ -75,9 +75,9 @@ for {w in AC} {
 					let COP_x[w,t,f] := Qac[w,t,f]/Pac[w,t,f];
 					}
 
-				let desconforto_x[z,t,1] := abs(Tin[z,t,1] - Tset_casa[z] * AC_Fase_a[z]);
-				let desconforto_x[z,t,2] := abs(Tin[z,t,2] - Tset_casa[z] * AC_Fase_b[z]);
-				let desconforto_x[z,t,3] := abs(Tin[z,t,3] - Tset_casa[z] * AC_Fase_c[z]);
+				let desconforto_x[z,t,1] := abs(Tin[z,t,1] - Tset_casa[z]) * AC_Fase_a[z];
+				let desconforto_x[z,t,2] := abs(Tin[z,t,2] - Tset_casa[z]) * AC_Fase_b[z];
+				let desconforto_x[z,t,3] := abs(Tin[z,t,3] - Tset_casa[z]) * AC_Fase_c[z];
 
 				let carga_bateria_x[z,t,f] := carga_bateria[z,t,f];
 				let Pac_x[z,t,f] := Pac[z,t,f];
