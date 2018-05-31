@@ -1,17 +1,17 @@
 
-display Pac_x > saidas\Pac.xls;
-display Qac_x > saidas\Qac.xls;
-display Tin_x > saidas\Tin.xls;
-display Tparede_x > saidas\Tparede.xls;
-display Tout_x > saidas\Tout.xls;
-display desconforto_x > saidas\desconforto.xls;
-display carga_bateria_x > saidas\carga_bateria.xls;
-display COP_x > saidas\COP.xls;
+display Pac_x > saidas\Pac_nao_cooperativo.xls;
+display Qac_x > saidas\Qac_nao_cooperativo.xls;
+display Tin_x > saidas\Tin_nao_cooperativo.xls;
+display Tparede_x > saidas\Tparede_nao_cooperativo.xls;
+display Tout_x > saidas\Tout_nao_cooperativo.xls;
+display desconforto_x > saidas\desconforto_nao_cooperativo.xls;
+display carga_bateria_x > saidas\carga_bateria_nao_cooperativo.xls;
+display COP_x > saidas\COP_nao_cooperativo.xls;
 
-display mod_Pac_freq_x > saidas\mod_Pac_freq.xls;
-display mod_Qac_freq_x > saidas\mod_Qac_freq.xls;
-display mod_Pac_Tout_x > saidas\mod_Pac_Tout.xls;
-display mod_Qac_Tout_x > saidas\mod_Qac_Tout.xls;
+display mod_Pac_freq_x > saidas\mod_Pac_freq_nao_cooperativo.xls;
+display mod_Qac_freq_x > saidas\mod_Qac_freq_nao_cooperativo.xls;
+display mod_Pac_Tout_x > saidas\mod_Pac_Tout_nao_cooperativo.xls;
+display mod_Qac_Tout_x > saidas\mod_Qac_Tout_nao_cooperativo.xls;
 
 printf "\nModelo Não-Cooperativo \n\n" > saidas\funcoes_objetivo_nao_cooperativo.txt;
 
@@ -35,10 +35,10 @@ printf "------------------------------------------------------------------------
 
 option omit_zero_cols 0;
 
-display on_off_x > saidas\on_off.xls;
-display frequency_ac_x > saidas\frequency_ac.xls;
-display pot_bateria_x > saidas\pot_bateria.xls;
-display pot_pfv_x > saidas\pot_pfv.xls;
+display on_off_x > saidas\on_off_nao_cooperativo.xls;
+display frequency_ac_x > saidas\frequency_ac_nao_cooperativo.xls;
+display pot_bateria_x > saidas\pot_bateria_nao_cooperativo.xls;
+display pot_pfv_x > saidas\pot_pfv_nao_cooperativo.xls;
 
 option omit_zero_cols 1;
 
