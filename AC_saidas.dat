@@ -1,18 +1,18 @@
 
-display Pac > saidas\Pac.xls;
-display Qac > saidas\Qac.xls;
-display Tin > saidas\Tin.xls;
-display Tparede > saidas\Tparede.xls;
-display Tout > saidas\Tout.xls;
-display Pac > saidas\Pac.xls;
-display desconforto > saidas\desconforto.xls;
-display pot_bateria > saidas\pot_bateria.xls;
-display carga_bateria > saidas\carga_bateria.xls;
+display Pac > saidas\Pac_cooperativo.xls;
+display Qac > saidas\Qac_cooperativo.xls;
+display Tin > saidas\Tin_cooperativo.xls;
+display Tparede > saidas\Tparede_cooperativo.xls;
+display Tout > saidas\Tout_cooperativo.xls;
+display Pac > saidas\Pac_cooperativo.xls;
+display desconforto > saidas\desconforto_cooperativo.xls;
+display pot_bateria > saidas\pot_bateria_cooperativo.xls;
+display carga_bateria > saidas\carga_bateria_cooperativo.xls;
 
-display mod_Pac_freq > saidas\mod_Pac_freq.xls;
-display mod_Qac_freq > saidas\mod_Qac_freq.xls;
-display mod_Pac_Tout > saidas\mod_Pac_Tout.xls;
-display mod_Qac_Tout > saidas\mod_Qac_Tout.xls;
+display mod_Pac_freq > saidas\mod_Pac_freq_cooperativo.xls;
+display mod_Qac_freq > saidas\mod_Qac_freq_cooperativo.xls;
+display mod_Pac_Tout > saidas\mod_Pac_Tout_cooperativo.xls;
+display mod_Qac_Tout > saidas\mod_Qac_Tout_cooperativo.xls;
 
 var COP{AC,Ot,Of};
  for {w in AC}{
@@ -26,7 +26,7 @@ var COP{AC,Ot,Of};
 					}
 		}
 	}
- }	display COP > saidas\COP.xls;
+ }	display COP > saidas\COP_cooperativo.xls;
 
 var desconforto_calculado{AC,Ot,Of};
 
@@ -36,7 +36,7 @@ var desconforto_calculado{AC,Ot,Of};
 		let desconforto_calculado[w,t,2] := abs(Tin[w,t,2] - Tset_casa[w]) * AC_Fase_b[w];
 		let desconforto_calculado[w,t,3] := abs(Tin[w,t,3] - Tset_casa[w]) * AC_Fase_c[w];
 	}
- }	display desconforto_calculado > saidas\desconforto_calculado.xls;
+ }	display desconforto_calculado > saidas\desconforto_calculado_cooperativo.xls;
 
 printf "\nModelo Cooperativo \n\n" > saidas\funcoes_objetivo_cooperativo.txt;
 
@@ -62,10 +62,10 @@ printf "------------------------------------------------------------------------
 
 option omit_zero_cols 0;
 
-display on_off > saidas\on_off.xls;
-display frequency_ac > saidas\frequency_ac.xls;
-display pot_bateria > saidas\pot_bateria.xls;
-display pot_pfv > saidas\pot_pfv.xls;
+display on_off > saidas\on_off_cooperativo.xls;
+display frequency_ac > saidas\frequency_ac_cooperativo.xls;
+display pot_bateria > saidas\pot_bateria_cooperativo.xls;
+display pot_pfv > saidas\pot_pfv_cooperativo.xls;
 
 option omit_zero_cols 1;
 
