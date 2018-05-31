@@ -38,27 +38,27 @@ var desconforto_calculado{AC,Ot,Of};
 	}
  }	display desconforto_calculado > saidas\desconforto_calculado.xls;
 
-printf "\nModelo Cooperativo \n\n" > saidas\funcoes_objetivo.txt;
+printf "\nModelo Cooperativo \n\n" > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\funcoes_objetivo.txt;
+printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "Índice de Desconforto\n" > saidas\funcoes_objetivo.txt;
-printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo.txt;
+printf "Índice de Desconforto\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "Índice de Desconforto Calculado\n" > saidas\funcoes_objetivo.txt;
-printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo.txt;
+printf "Índice de Desconforto Calculado\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto_calculado[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "Consumo de Energia com Tarifa Branca\n" > saidas\funcoes_objetivo.txt;
-printf "%4f \n", fo_gasto_sem_bateria > saidas\funcoes_objetivo.txt;
+printf "Consumo de Energia com Tarifa Branca\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "%4f \n", fo_gasto_sem_bateria > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "Consumo de Energia com Tarifa Branca com baterias\n" > saidas\funcoes_objetivo.txt;
-printf "%4f \n", fo_gasto_com_bateria > saidas\funcoes_objetivo.txt;
+printf "Consumo de Energia com Tarifa Branca com baterias\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "%4f \n", fo_gasto_com_bateria > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "Consumo de Energia com Tarifa Branca com baterias e paineis\n" > saidas\funcoes_objetivo.txt;
-printf "%4f \n", fo_gasto_com_bateria_e_paineis > saidas\funcoes_objetivo.txt;
+printf "Consumo de Energia com Tarifa Branca com baterias e paineis\n" > saidas\funcoes_objetivo_cooperativo.txt;
+printf "%4f \n", fo_gasto_com_bateria_e_paineis > saidas\funcoes_objetivo_cooperativo.txt;
 
-printf "----------------------------------------------------------------------------\n" >> saidas\funcoes_objetivo.txt;
-printf "----------------------------------------------------------------------------\n\n" >> saidas\funcoes_objetivo.txt;
+printf "----------------------------------------------------------------------------\n" >> saidas\funcoes_objetivo_cooperativo.txt;
+printf "----------------------------------------------------------------------------\n\n" >> saidas\funcoes_objetivo_cooperativo.txt;
 
 option omit_zero_cols 0;
 
