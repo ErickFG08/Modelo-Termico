@@ -4,34 +4,56 @@ display Qac > saidas\Qac.xls;
 display Tin > saidas\Tin.xls;
 display Tparede > saidas\Tparede.xls;
 display Tout > saidas\Tout.xls;
+display Pac > saidas\Pac.xls;
 display desconforto > saidas\desconforto.xls;
+display pot_bateria > saidas\pot_bateria.xls;
 display carga_bateria > saidas\carga_bateria.xls;
-display COP > saidas\COP.xls;
 
 display mod_Pac_freq > saidas\mod_Pac_freq.xls;
 display mod_Qac_freq > saidas\mod_Qac_freq.xls;
 display mod_Pac_Tout > saidas\mod_Pac_Tout.xls;
 display mod_Qac_Tout > saidas\mod_Qac_Tout.xls;
 
-display desconforto > saidas\desconforto.xls;
+var COP{AC,Ot,Of};
+ for {w in AC}{
+	for{t in Ot}{
+		for {f in Of}{
+					if (Pac[w,t,f] == 0) then {
+					let COP[w,t,f] := 0;
+					}
+					else{
+					let COP[w,t,f] := Qac[w,t,f]/Pac[w,t,f];
+					}
+		}
+	}
+ }	display COP > saidas\COP.xls;
 
-printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\saidas_funcoes_objetivo.txt;
+var desconforto_calculado{AC,Ot,Of};
+ for {w in AC}{
+	for{t in Ot}{
+		let desconforto_calculado[w,t,1] := abs(Tin[w,t,1] - Tset_casa[w] * AC_Fase_a[w]);
+		let desconforto_calculado[w,t,2] := abs(Tin[w,t,2] - Tset_casa[w] * AC_Fase_b[w]);
+		let desconforto_calculado[w,t,3] := abs(Tin[w,t,3] - Tset_casa[w] * AC_Fase_c[w]);
+	}
+ }	display desconforto_calculado > saidas\desconforto_calculado.xls;
 
-printf "Índice de Desconforto\n" > saidas\saidas_funcoes_objetivo.txt;
+printf "\nTempo de Execucao: %f minutos \n\n", _solve_elapsed_time/60 > saidas\funcoes_objetivo.txt;
 
-printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto[w,t,f]/card(Ot)/card(AC) > saidas\saidas_funcoes_objetivo.txt;
+printf "Índice de Desconforto\n" > saidas\funcoes_objetivo.txt;
 
-printf "Consumo de Energia com Tarifa Branca\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%4f \n", sum{x in AC}saida_fo_gasto_sem_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
+printf "%4f \n",  sum{w in AC, t in Ot, f in Of} desconforto[w,t,f]/card(Ot)/card(AC) > saidas\funcoes_objetivo.txt;
 
-printf "Consumo de Energia com Tarifa Branca com baterias\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%4f \n", sum{x in AC}saida_fo_gasto_com_bateria[x] > saidas\saidas_funcoes_objetivo.txt;
+printf "Consumo de Energia com Tarifa Branca\n" > saidas\funcoes_objetivo.txt;
+printf "%4f \n", fo_gasto_sem_bateria > saidas\funcoes_objetivo.txt;
 
-printf "Consumo de Energia com Tarifa Branca com baterias e paineis\n" > saidas\saidas_funcoes_objetivo.txt;
-printf "%4f \n", sum{x in AC}saida_fo_gasto_com_bateria_e_paineis[x] > saidas\saidas_funcoes_objetivo.txt;
+printf "Consumo de Energia com Tarifa Branca com baterias\n" > saidas\funcoes_objetivo.txt;
+printf "%4f \n", fo_gasto_com_bateria > saidas\funcoes_objetivo.txt;
 
-printf "----------------------------------------------------------------------------\n" >> saidas\saidas_funcoes_objetivo.txt;
-printf "----------------------------------------------------------------------------\n\n" >> saidas\saidas_funcoes_objetivo.txt;
+printf "Consumo de Energia com Tarifa Branca com baterias e paineis\n" > saidas\funcoes_objetivo.txt;
+printf "%4f \n", fo_gasto_com_bateria_e_paineis > saidas\funcoes_objetivo.txt;
+
+printf "----------------------------------------------------------------------------\n" >> saidas\funcoes_objetivo.txt;
+printf "----------------------------------------------------------------------------\n\n" >> saidas\funcoes_objetivo.txt;
 
 option omit_zero_cols 0;
 
@@ -41,6 +63,9 @@ display pot_bateria > saidas\pot_bateria.xls;
 display pot_pfv > saidas\pot_pfv.xls;
 
 option omit_zero_cols 1;
+
+
+
 
 
 
